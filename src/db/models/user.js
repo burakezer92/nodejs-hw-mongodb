@@ -8,8 +8,8 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     role: {
       type: String,
-      enum: [ROLES.TEACHER, ROLES.PARENT],
-      default: ROLES.PARENT,
+      enum: [ROLES.ADMIN, ROLES.USER],
+      default: ROLES.USER,
     },
   },
   { timestamps: true, versionKey: false },
