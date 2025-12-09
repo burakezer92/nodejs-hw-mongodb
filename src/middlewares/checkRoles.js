@@ -7,27 +7,27 @@ export const checkRoles =
   (...roles) =>
   async (req, res, next) => {
     const { user } = req;
+    console.log(user);
     if (!user) {
       next(createHttpError(401));
       return;
     }
 
     const { role } = user;
-    if (roles.includes(ROLES.TEACHER) && role === ROLES.TEACHER) {
+    if (roles.includes(ROLES.ADMIN) && role === ROLES.ADMIN) {
       next();
       return;
     }
 
-    if (roles.includes(ROLES.PARENT) && role === ROLES.PARENT) {
+    if (roles.includes(ROLES.USER) && role === ROLES.USER) {
       const { contactId } = req.params;
       if (!contactId) {
         next(createHttpError(403));
         return;
       }
-
       const contact = await ContactsCollection.findOne({
         _id: contactId,
-        parentId: user._id,
+        userId: user._id,
       });
 
       if (contact) {

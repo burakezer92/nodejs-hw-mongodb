@@ -18,40 +18,43 @@ import {
   updateContactSchema,
 } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { upload } from '../middlewares/multer.js';
 
 const router = Router();
 
 router.use(authenticate);
 
-router.get('/', checkRoles(ROLES.TEACHER), ctrlWrapper(getContactsController));
+router.get('/', checkRoles(ROLES.ADMIN), ctrlWrapper(getContactsController));
 
 router.get(
   '/:contactId',
-  //checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   ctrlWrapper(contactController),
 );
 
 router.post(
   '/',
-  checkRoles(ROLES.TEACHER),
   validateBody(createContactSchema),
+  upload.single('photo'),
+  checkRoles(ROLES.ADMIN),
   ctrlWrapper(createContactController),
 );
 
 router.patch(
   '/:contactId',
-  checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
+  upload.single('photo'),
   validateBody(updateContactSchema),
+  checkRoles(ROLES.ADMIN, ROLES.USER),
   ctrlWrapper(patchContactController),
 );
 
 router.delete(
   '/:contactId',
-  checkRoles(ROLES.TEACHER),
   isValidId,
   validateBody(updateContactSchema),
+  checkRoles(ROLES.ADMIN),
   ctrlWrapper(deleteContactController),
 );
 
