@@ -26,7 +26,7 @@ export const getContactsController = async (req, res) => {
   });
   res.json({
     status: 200,
-    message: 'Successfully found students!',
+    message: 'Successfully found contacts!',
     data: data,
   });
 };
@@ -51,7 +51,7 @@ export const createContactController = async (req, res) => {
 
   res.status(201).json({
     status: 201,
-    message: `Successfully created a student!`,
+    message: `Successfully created a contact!`,
     data: contact,
   });
 };
@@ -95,7 +95,7 @@ export const patchContactController = async (req, res, next) => {
 
   res.json({
     status: 200,
-    message: `Successfully patched a student!`,
+    message: `Successfully patched a contact!`,
     data: result.contact,
   });
 };
